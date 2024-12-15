@@ -1,0 +1,6 @@
+@YandexMusic_HostAddress = http://localhost:5276
+
+GET {{YandexMusic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
