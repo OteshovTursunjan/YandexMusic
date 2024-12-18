@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace YandexMusic.DataAccess.Identity;
 
-public  class ApplicationUser : IdentityUser { }
+ public class ApplicationUser : IdentityUser { }
+
