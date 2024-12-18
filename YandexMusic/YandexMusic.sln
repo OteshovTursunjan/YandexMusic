@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexMusic", "YandexMusic\YandexMusic.csproj", "{77F63BCD-500E-44CA-B7FA-2D6A89986E64}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EEB81A89-7ABE-41A5-8E63-3A91FFD29E77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexMusic.DataAccess", "YandexMusic.DataAccess\YandexMusic.DataAccess.csproj", "{D243E2CA-AD07-47CB-BA65-A2B0308723B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexMusic", "src\YandexMusic\YandexMusic.csproj", "{39D130A8-E99F-4497-94D8-BF3CA4182EC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexMusic.Core", "YandexMusic.Core\YandexMusic.Core.csproj", "{32DBDC7F-8D61-49A4-B530-465B18CE8D25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexMusics.Core", "src\YandexMusics.Core\YandexMusics.Core\YandexMusics.Core.csproj", "{BD8B747F-7D52-4A95-AF47-C53A1526EC24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexMusic.DataAccess", "src\YandexMusic.DataAccess\YandexMusic.DataAccess\YandexMusic.DataAccess.csproj", "{CCD78B2B-254D-44D2-A265-5390818E94C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +17,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{77F63BCD-500E-44CA-B7FA-2D6A89986E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77F63BCD-500E-44CA-B7FA-2D6A89986E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77F63BCD-500E-44CA-B7FA-2D6A89986E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77F63BCD-500E-44CA-B7FA-2D6A89986E64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D243E2CA-AD07-47CB-BA65-A2B0308723B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D243E2CA-AD07-47CB-BA65-A2B0308723B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D243E2CA-AD07-47CB-BA65-A2B0308723B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D243E2CA-AD07-47CB-BA65-A2B0308723B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32DBDC7F-8D61-49A4-B530-465B18CE8D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32DBDC7F-8D61-49A4-B530-465B18CE8D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32DBDC7F-8D61-49A4-B530-465B18CE8D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32DBDC7F-8D61-49A4-B530-465B18CE8D25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D130A8-E99F-4497-94D8-BF3CA4182EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D130A8-E99F-4497-94D8-BF3CA4182EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D130A8-E99F-4497-94D8-BF3CA4182EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D130A8-E99F-4497-94D8-BF3CA4182EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8B747F-7D52-4A95-AF47-C53A1526EC24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8B747F-7D52-4A95-AF47-C53A1526EC24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8B747F-7D52-4A95-AF47-C53A1526EC24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8B747F-7D52-4A95-AF47-C53A1526EC24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCD78B2B-254D-44D2-A265-5390818E94C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD78B2B-254D-44D2-A265-5390818E94C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD78B2B-254D-44D2-A265-5390818E94C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD78B2B-254D-44D2-A265-5390818E94C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{39D130A8-E99F-4497-94D8-BF3CA4182EC1} = {EEB81A89-7ABE-41A5-8E63-3A91FFD29E77}
+		{BD8B747F-7D52-4A95-AF47-C53A1526EC24} = {EEB81A89-7ABE-41A5-8E63-3A91FFD29E77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A29AA42-F54E-409C-9367-03AFCCEA796C}
