@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+
 
 namespace YandexMusic.DataAccess.Identity;
 
