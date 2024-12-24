@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YandexMusic.Application\YandexMusic.Application\YandexMusic.Application.csproj" />
-    <ProjectReference Include="..\YandexMusic.DataAccess\YandexMusic.DataAccess\YandexMusic.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

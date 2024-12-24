@@ -16,10 +16,10 @@ namespace YandexMusics.Core.Entities.Musics
         public Tarrif_Type TarrifType { get; set; }
         public Guid Tarrif_TypeId { get; set; }
         public bool IsPaid { get; set; } = true;
-        public string CreatBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? CreatBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public string UpdateBY { get; set; }
+        public string? UpdateBY { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

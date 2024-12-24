@@ -42,7 +42,7 @@ public static class DataAccessDependesInjection
         else
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseNpgsql(databaseConfig.ConnectionString,
-                    opt => opt.MigrationsAssembly("YandexMusic")));  // Убедитесь, что здесь указана правильная сборка миграций
+                    opt => opt.MigrationsAssembly("YandexMusic.DataAccess")));  // Убедитесь, что здесь указана правильная сборка миграций
     }
 
 

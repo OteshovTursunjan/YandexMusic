@@ -11,10 +11,10 @@ namespace YandexMusics.Core.Entities.Musics
     {
         public string Name { get; set; }
         public ICollection<Cards> Cards { get; set; }
-        public string CreatBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? CreatBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public string UpdateBY { get; set; }
-        public DateTime? UpdatedOn { get; set; }
+        public string? UpdateBY { get; set; }
+        public DateTime?  UpdatedOn { get; set; }
     }
 }

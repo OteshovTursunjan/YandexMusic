@@ -55,10 +55,12 @@ public  class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity :
     {
         var entity = await DbSet.Where(predicate).FirstOrDefaultAsync();
 
-        if (entity == null) throw new ResourceNotFound(typeof(TEntity));
+        if (entity == null)
+            throw new ResourceNotFound(typeof(TEntity));
 
-        return await DbSet.Where(predicate).FirstOrDefaultAsync();
+        return entity;
     }
+
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {

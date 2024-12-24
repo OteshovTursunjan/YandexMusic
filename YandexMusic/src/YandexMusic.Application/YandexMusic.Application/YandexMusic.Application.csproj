@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\test\Yandex.Shared\Yandex.Shared\Yandex.Shared.csproj" />
+    <ProjectReference Include="..\..\YandexMusic.DataAccess\YandexMusic.DataAccess\YandexMusic.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
