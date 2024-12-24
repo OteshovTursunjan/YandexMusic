@@ -14,10 +14,10 @@ namespace YandexMusics.Core.Entities.Music
         public Musics Music { get; set; }
         public Guid MusicId { get; set; }
         public bool IsDeleted { get; set; }
-        public string CreatBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? CreatBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public string UpdateBY { get; set; }
+        public string? UpdateBY { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

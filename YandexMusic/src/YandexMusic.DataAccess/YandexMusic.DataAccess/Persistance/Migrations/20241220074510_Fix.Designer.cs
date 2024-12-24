@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using YandexMusic.DataAccess.Persistance;
@@ -11,9 +12,11 @@ using YandexMusic.DataAccess.Persistance;
 namespace YandexMusic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241220074510_Fix")]
+    partial class Fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,14 +232,12 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -254,10 +255,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
@@ -267,7 +267,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -290,17 +289,15 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("MusicId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -322,10 +319,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
@@ -333,7 +329,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -357,10 +352,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("GenreId")
@@ -371,7 +365,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -396,21 +389,20 @@ namespace YandexMusic.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<Guid>("Tarrif_TypeId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -435,10 +427,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
@@ -446,7 +437,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -473,10 +463,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Expired_Date")
@@ -484,7 +473,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -515,10 +503,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsPaid")
@@ -528,7 +515,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -555,10 +541,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Type")
@@ -566,7 +551,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -588,10 +572,9 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CreatBy")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
@@ -607,7 +590,6 @@ namespace YandexMusic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UpdateBY")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedOn")

@@ -13,10 +13,10 @@ namespace YandexMusics.Core.Entities.Musics
         public int Amount {  get; set; }
 
         public ICollection<Account> Accounts { get; set; }
-        public string CreatBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? CreatBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public string UpdateBY { get; set; }
+        public string? UpdateBY { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

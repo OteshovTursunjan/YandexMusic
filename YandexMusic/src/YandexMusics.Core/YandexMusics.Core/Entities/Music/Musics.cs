@@ -16,10 +16,10 @@ namespace YandexMusics.Core.Entities.Music
 
         public Genres Genre { get; set; }
         public Guid GenreId { get; set; }
-        public string CreatBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string? CreatBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public string UpdateBY { get; set; }
+        public string? UpdateBY { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }
