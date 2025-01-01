@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using YandexMusic.Application.DTOs.User;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 
 namespace YandexMusic.Controllers.user

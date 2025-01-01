@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YandexMusic.Application.DTOs.User;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusics.Core.Entities.Musics;
 
 namespace YandexMusic.Application.Services

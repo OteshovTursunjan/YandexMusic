@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using YandexMusic.Application.DTOs;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 using YandexMusic.DataAccess.Authentication;
 using YandexMusic.DataAccess.Repository;
@@ -52,7 +52,7 @@ namespace YandexMusic.Application.Services
             }).ToList();
         }
 
-        public async Task<UserDTO> AddUserAsync(UserForCreationDTO userForCreationDTO)
+        public async Task<UserForCreationDTO> AddUserAsync(UserForCreationDTO userForCreationDTO)
         {
             if (userForCreationDTO == null)
                 throw new ArgumentNullException(nameof(userForCreationDTO));
@@ -81,7 +81,7 @@ namespace YandexMusic.Application.Services
                 Name = userForCreationDTO.Name,
             };
             
-            return result;
+            return userForCreationDTO;
         }
 
         public async Task<User> UpdateUserAsync(Guid id, UserDTO userDto)

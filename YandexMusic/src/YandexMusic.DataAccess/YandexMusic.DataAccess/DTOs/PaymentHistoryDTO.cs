@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusics.Core.Entities.Musics;
 
-namespace YandexMusic.Application.DTOs
+namespace YandexMusic.DataAccess.DTOs
 {
    public  class PaymentHistoryDTO
     {
