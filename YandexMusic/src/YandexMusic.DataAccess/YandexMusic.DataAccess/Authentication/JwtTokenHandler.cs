@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusics.Core.Entities.Musics;
 
 namespace YandexMusic.DataAccess.Authentication
@@ -20,13 +21,11 @@ namespace YandexMusic.DataAccess.Authentication
         {
             jwtOption = options.Value;
         }
-        public JwtSecurityToken GenerateAccesToken(User user)
+        public JwtSecurityToken GenerateAccesToken(UserForCreationDTO user)
         {
             var claims = new List<Claim>
             {
-                new Claim(CustomClaim.Id , user.Id.ToString()),
-                new Claim(CustomClaim.Email , user.Email),
-                new Claim(CustomClaim.Role , user.Role),
+                new Claim(CustomClaim.Email , user.Email)
             };
 
             var authSigningKey = new SymmetricSecurityKey(

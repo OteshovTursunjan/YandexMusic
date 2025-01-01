@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YandexMusic.Application.DTOs;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusics.Core.Entities.Music;
 using YandexMusics.Core.Entities.Musics;
 

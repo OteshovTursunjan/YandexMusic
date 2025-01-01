@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YandexMusic.Application.DTOs.User
+namespace YandexMusic.DataAccess.DTOs
 {
-    public  class CardTypeDTO
+   public class GenreDTO
     {
-        public string CardName {  get; set; }
+        public string Name { get; set; }
     }
 }

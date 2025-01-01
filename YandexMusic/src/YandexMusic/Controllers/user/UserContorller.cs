@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using YandexMusic.Application.DTOs;
+using System.IdentityModel.Tokens.Jwt;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
+using YandexMusic.DataAccess.Authentication;
 using YandexMusics.Core.Entities.Musics;
 
 namespace YandexMusic.Controllers.user
@@ -9,13 +11,15 @@ namespace YandexMusic.Controllers.user
     public class UserContorller : Controller
     {
         private readonly IUserService _userService;
+        private readonly IJwtTokenHandler _jwtTokenHandler;
 
-        public UserContorller(IUserService userService)
+        public UserContorller(IUserService userService, IJwtTokenHandler jwtTokenHandler)
         {
             _userService = userService;
+            _jwtTokenHandler = jwtTokenHandler;
         }
 
-        public IActionResult Index()
+      public IActionResult Index()
         {
             return View();
         }
@@ -30,13 +34,27 @@ namespace YandexMusic.Controllers.user
         }
 
         [HttpPost("create-user")]
-        public async Task<IActionResult> AddUser( UserForCreationDTO userDto)
+        public async Task<IActionResult> AddUser( UserForCreationDTO userForCreationDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            try
+            {
+                var CreateUser = await _userService.AddUserAsync(userForCreationDTO);
+                var accesTokent = _jwtTokenHandler.GenerateAccesToken(CreateUser);
+                var refreshToken = _jwtTokenHandler.GenerateRefreshToken();
 
-            var newUser = await _userService.AddUserAsync(userDto);
-            return newUser == null ? NotFound() : Ok(newUser);
+                return Ok(new
+                {
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(accesTokent),
+                    RefreshToken = refreshToken,
+                    User = CreateUser
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {Message = ex.Message});
+            }
         }
 
         [HttpPut("update-user/{id}")]

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using YandexMusic.Application.DTOs;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 using YandexMusic.Application.Services.lmpl;
 using YandexMusic.Migrations;
