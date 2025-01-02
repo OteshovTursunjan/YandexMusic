@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.DataAccess.Authentication
 {

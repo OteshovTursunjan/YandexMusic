@@ -15,10 +15,11 @@ builder.Services.AddControllers(
     config => config.Filters.Add(typeof(ValidMethodAtributecs))
 );
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwager();
 
 builder.Services.AddDataAccess(builder.Configuration)
     .AddApplication(builder.Environment);
+
 
 builder.Services.Configure<JwtOption>(builder.Configuration.GetSection("JwtOptions"));
 

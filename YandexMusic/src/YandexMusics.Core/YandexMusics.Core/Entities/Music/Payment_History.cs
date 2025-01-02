@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusics.Core.Common;
 
-namespace YandexMusics.Core.Entities.Musics
+namespace YandexMusics.Core.Entities.Music
 {
     public class Payment_History : BaseEntity, IAuditedEntity
     {

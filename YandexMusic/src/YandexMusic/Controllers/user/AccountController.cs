@@ -24,7 +24,7 @@ namespace YandexMusic.Controllers.user
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var newAccount = accountService.AddUserAsync(accountDTO);
+            var newAccount = accountService.AddAccountAsync(accountDTO);
             return newAccount == null ? NotFound() : Ok(newAccount);
         }
 
@@ -38,21 +38,21 @@ namespace YandexMusic.Controllers.user
             return account == null ? NotFound() : Ok(account);
         }
 
-        [HttpPost("UpdateAccounts")]
+        [HttpPut("UpdateAccounts/{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] AccountDTO accountDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var account = await accountService.UpdateUserAsync(id, accountDTO);
+            var account = await accountService.UpdateAccountAsync(id, accountDTO);
             return account != null ? Ok(account) : NotFound();  
         }
 
-        [HttpPut("DeleteAccount/{id}")]
+        [HttpDelete("DeleteAccount/{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var account = await accountService.DeleteUserAsync(id);
+            var account = await accountService.DeleteAccountAsync(id);
             if (account)
                 return Ok(new { message = "User deleted successfully." });
             else

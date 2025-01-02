@@ -8,13 +8,12 @@ using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusics.Core.Entities.Music
 {
-    public class Favourities : BaseEntity ,IAuditedEntity
+    public class Tarrif_Type : BaseEntity , IAuditedEntity
     {
-        public Musics music { get; set; }
-        public Guid MusicId { get; set; }
+        public string Type { get; set; }
+        public int Amount {  get; set; }
 
-        public Account Account { get; set; }
-        public Guid AccountID { get; set; }
+       public ICollection<Account> Accounts { get; set; }
         public string? CreatBy { get; set; }
         public DateTime? CreatedOn { get; set; }
 

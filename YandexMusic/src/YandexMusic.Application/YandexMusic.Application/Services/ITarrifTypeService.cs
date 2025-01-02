@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services
 {
@@ -12,7 +12,7 @@ namespace YandexMusic.Application.Services
     {
         Task<TarrifTypeDTO> GetByIdAsync(Guid id);
         Task<List<TarrifTypeDTO>> GetAllAsync();
-        Task<Tarrif_Type> AddTarrifAsync(TarrifTypeDTO tarrifTypeDto);
+        Task<TarrifTypeDTO> AddTarrifAsync(TarrifTypeDTO tarrifTypeDto);
         Task<Tarrif_Type> UpdateTarrifAsync(Guid id, TarrifTypeDTO tarrifTypeDto);
         Task<bool> DeleteTarrifAsync(Guid id);
     }

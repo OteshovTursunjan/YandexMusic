@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services.lmpl
 {
@@ -17,7 +17,7 @@ namespace YandexMusic.Application.Services.lmpl
             _typeRepository = typeRepository;
         }
 
-        public Task<Tarrif_Type> AddTarrifAsync(TarrifTypeDTO tarrifTypeDto)
+        public async Task<TarrifTypeDTO> AddTarrifAsync(TarrifTypeDTO tarrifTypeDto)
         {
             if(tarrifTypeDto == null)
                 throw new ArgumentNullException(nameof(tarrifTypeDto), "Tarrif cannot be null.");
@@ -26,19 +26,18 @@ namespace YandexMusic.Application.Services.lmpl
                 Type = tarrifTypeDto.Type,
                 Amount = tarrifTypeDto.Amount,
             };
-            _typeRepository.AddAsync(res);
-            return Task.FromResult(res);
+           await _typeRepository.AddAsync(res);
+            return tarrifTypeDto;
         }
 
         public async Task<bool> DeleteTarrifAsync(Guid id)
         {
-           if(id == null)
-            {
-                return false;
-            }
+
            var res = await _typeRepository.GetFirstAsync(u  => u.Id == id);
+            if (res == null)
+                return false;
            await _typeRepository.DeleteAsync(res);
-            return true;
+           return true;
         }
 
         public Task<List<TarrifTypeDTO>> GetAllAsync()
@@ -59,21 +58,29 @@ namespace YandexMusic.Application.Services.lmpl
 
         }
 
-        public async Task<Tarrif_Type> UpdateTarrifAsync(Guid id, TarrifTypeDTO tarrifTypeDto)
+
+        public async Task<YandexMusics.Core.Entities.Music.Tarrif_Type> UpdateTarrifAsync(Guid id, TarrifTypeDTO tarrifTypeDto)
         {
             if (tarrifTypeDto == null)
                 throw new ArgumentNullException(nameof(tarrifTypeDto), "UserDTO cannot be null.");
 
+            Console.WriteLine($"Looking for Tarrif_Type with Id: {id}");
             var tarrif = await _typeRepository.GetFirstAsync(u => u.Id == id);
 
             if (tarrif == null)
-                return null; 
+            {
+                Console.WriteLine("Tarrif_Type not found.");
+                return null;
+            }
 
             tarrif.Type = tarrifTypeDto.Type;
             tarrif.Amount = tarrifTypeDto.Amount;
-            await _typeRepository.UpdateAsync(tarrif);
-            return tarrif;
 
+            await _typeRepository.UpdateAsync(tarrif);
+
+           
+            return tarrif;
         }
+
     }
 }

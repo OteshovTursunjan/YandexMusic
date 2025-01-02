@@ -86,7 +86,7 @@ public static class DataAccessDependesInjection
     }
 }
 
-// TODO move outside?
+
 public class DatabaseConfiguration
 {
     public bool UseInMemoryDatabase { get; set; }

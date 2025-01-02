@@ -3,11 +3,12 @@ using System.IdentityModel.Tokens.Jwt;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 using YandexMusic.DataAccess.Authentication;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YandexMusic.Controllers.user
 {
-
+    [Authorize]
     public class UserContorller : Controller
     {
         private readonly IUserService _userService;
@@ -58,7 +59,7 @@ namespace YandexMusic.Controllers.user
         }
 
         [HttpPut("update-user/{id}")]
-        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UserDTO userDTO)
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id,  UserDTO userDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -66,7 +67,7 @@ namespace YandexMusic.Controllers.user
             var res = await _userService.UpdateUserAsync(id, userDTO);
             return res == null ? NotFound() : Ok(res);
         }
-        [HttpPut("Delete/{ID}")]
+        [HttpDelete("Delete/{ID}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid ID)
         {
             if (!ModelState.IsValid)

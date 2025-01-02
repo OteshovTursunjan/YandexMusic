@@ -34,15 +34,23 @@ namespace YandexMusic.Controllers.Music
             return Ok(res);
 
         }
-        //[HttpPut("UpdateGenres{id}")]
-        //public async    Task<IActionResult> UpdateGenres([FromRoute] Guid id,GenreDTO genreDTO)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
+        [HttpPut("UpdateGenres{id}")]
+        public async Task<IActionResult> UpdateGenres([FromRoute] Guid id, GenreDTO genreDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    var res = await _genresService.UpdateGenresAsync(id, genreDTO);
-        //    return Ok(res);
-        //}
+            var res = await _genresService.UpdateGenresAsync(id, genreDTO);
+            return Ok(res);
+        }
+        [HttpDelete("DeleteGenres{id}")]
+        public async Task<IActionResult> DeleteGenres([FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var res = await  _genresService.DeleteGenresAsync(id);
+            return Ok(res);
+        }
 
     }
 }
