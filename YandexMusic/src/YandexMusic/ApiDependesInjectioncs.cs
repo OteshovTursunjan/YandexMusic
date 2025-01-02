@@ -30,7 +30,7 @@ public static class ApiDependesInjectioncs
             };
         });
     }
-    public static void AddSwager(IServiceCollection service)
+    public static void AddSwager(this IServiceCollection service)
     {
         service.AddSwaggerGen(s =>
         {

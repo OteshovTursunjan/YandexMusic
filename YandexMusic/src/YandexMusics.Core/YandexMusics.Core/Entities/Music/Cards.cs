@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusics.Core.Common;
 
-namespace YandexMusics.Core.Entities.Musics
+namespace YandexMusics.Core.Entities.Music
 {
-    public class Cards : BaseEntity,IAuditedEntity
+    public class Cards : BaseEntity, IAuditedEntity
     {
-         public User User { get; set; }
+        public User User { get; set; }
         public Guid UserId { get; set; }
         public Card_Type Card_Type { get; set; }
         public Guid CardId { get; set; }

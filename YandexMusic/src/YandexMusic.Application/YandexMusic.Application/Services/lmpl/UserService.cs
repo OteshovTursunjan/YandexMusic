@@ -7,7 +7,7 @@ using YandexMusic.Application.Services;
 using YandexMusic.DataAccess.Authentication;
 using YandexMusic.DataAccess.Repository;
 using YandexMusics.Core.Entities.Enum;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services
 {

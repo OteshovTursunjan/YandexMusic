@@ -8,7 +8,6 @@ using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
 using YandexMusic.DataAccess.Repository.lmpl;
 using YandexMusics.Core.Entities.Music;
-using YandexMusics.Core.Entities.Musics;
 
 namespace YandexMusic.Application.Services.lmpl
 {

@@ -5,14 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusics.Core.Common;
 
-namespace YandexMusics.Core.Entities.Musics
+namespace YandexMusics.Core.Entities.Music
 {
-    public class Tarrif_Type : BaseEntity , IAuditedEntity
+    public class Card_Type : BaseEntity, IAuditedEntity
     {
-        public string Type { get; set; }
-        public int Amount {  get; set; }
-
-        public ICollection<Account> Accounts { get; set; }
+        public string Name { get; set; }
+        public ICollection<Cards> Cards { get; set; }
         public string? CreatBy { get; set; }
         public DateTime? CreatedOn { get; set; }
 

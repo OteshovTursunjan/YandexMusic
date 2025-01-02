@@ -36,15 +36,6 @@ namespace YandexMusic.Controllers.user
             var res = await tarrifTypeService.UpdateTarrifAsync(id, tarrif);
             return Ok(res);
         }
-        [HttpPost("DeleteTarrif{id}")]
-        public async Task<IActionResult> DeleteTarrif([FromRoute] Guid id)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var newTarruf = tarrifTypeService.DeleteTarrifAsync(id);
-
-            return newTarruf == null ? NotFound() : Ok(newTarruf);
-        }
         [HttpGet("GetTarrif{id}")]
         public async Task<IActionResult> GetTarrif([FromRoute] Guid id)
         {
@@ -53,6 +44,15 @@ namespace YandexMusic.Controllers.user
             var newTarrif = await tarrifTypeService.GetByIdAsync(id);
 
             return newTarrif == null ? NotFound() : Ok(newTarrif);
+        }
+        [HttpDelete("DeleteTarrif/{id}")]
+        public async Task<IActionResult> DeleteTarrif([FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var newTarruf = tarrifTypeService.DeleteTarrifAsync(id);
+
+            return newTarruf == null ? NotFound() : Ok(newTarruf);
         }
     }
 }

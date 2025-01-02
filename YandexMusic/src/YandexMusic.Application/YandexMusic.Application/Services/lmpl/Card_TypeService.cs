@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services.lmpl
 {
-   public  class Card_TypeService : ICard_TypeService
+    public  class Card_TypeService : ICard_TypeService
     {
         public readonly ICard_TypeRepository _card_TypeRepository;
 
