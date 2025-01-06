@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using YandexMusic.DataAccess.Authentication;
 using YandexMusic.DataAccess.DTOs;
-using YandexMusic.Application.Services;
-using YandexMusic.DataAccess.Authentication;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Enum;
 using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services
@@ -22,11 +16,11 @@ namespace YandexMusic.Application.Services
             _users = userRepository;
             _passwordHasher = passwordHasher;
         }
-      
+
         public async Task<UserDTO> GetByIdAsync(Guid id)
         {
             var user = await _users.GetFirstAsync(u => u.Id == id);
-            
+
 
             if (user == null)
                 return null;
@@ -80,32 +74,32 @@ namespace YandexMusic.Application.Services
                 PassportId = userForCreationDTO.PassportId,
                 Name = userForCreationDTO.Name,
             };
-            
+
             return userForCreationDTO;
         }
 
         public async Task<User> UpdateUserAsync(Guid id, UserDTO userDto)
         {
-            
+
             if (userDto == null)
                 throw new ArgumentNullException(nameof(userDto), "UserDTO cannot be null.");
 
-            
+
             var user = await _users.GetFirstAsync(u => u.Id == id);
 
             if (user == null)
                 return null;
 
-            
+
             user.Name = userDto.Name;
             user.Email = userDto.Email;
             user.Address = userDto.Address;
             user.PassportId = userDto.PassportId;
 
-          
+
             await _users.UpdateAsync(user);
 
-            return user; 
+            return user;
         }
 
 
@@ -120,6 +114,6 @@ namespace YandexMusic.Application.Services
             return true;
         }
 
-       
+
     }
 }

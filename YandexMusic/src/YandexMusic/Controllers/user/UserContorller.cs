@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace YandexMusic.Controllers.user
 {
-    [Authorize]
+ //   [Authorize]
     public class UserContorller : Controller
     {
         private readonly IUserService _userService;

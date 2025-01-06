@@ -28,4 +28,8 @@
     <ProjectReference Include="..\YandexMusic.Application\YandexMusic.Application\YandexMusic.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
 </Project>

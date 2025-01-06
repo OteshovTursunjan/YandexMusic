@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\Users\" />
+    <Folder Include="AllMusic\" />
   </ItemGroup>
 
 </Project>
