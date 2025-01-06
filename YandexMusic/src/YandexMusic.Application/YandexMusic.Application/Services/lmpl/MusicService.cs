@@ -63,7 +63,8 @@ namespace YandexMusic.Application.Services.Impl
                 var music = new Musics
                 {
                    
-                    Name = fullPath,
+                    Path = fullPath,
+                    Name = musicDTO.Name,
                     AuthorId = musicDTO.AuthotId,
                     GenreId = musicDTO.GenreId
                 };

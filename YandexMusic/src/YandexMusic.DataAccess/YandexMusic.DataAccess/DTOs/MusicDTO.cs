@@ -8,7 +8,7 @@ namespace YandexMusic.DataAccess.DTOs
 {
   public   class MusicDTO
     {
-      //  public string Name {  get; set; }
+        public string Name {  get; set; }
          public Guid AuthotId { get; set; }
         
         public Guid GenreId { get; set; }

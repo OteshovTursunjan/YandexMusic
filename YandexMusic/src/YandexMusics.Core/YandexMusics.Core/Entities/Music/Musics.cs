@@ -10,7 +10,7 @@ namespace YandexMusics.Core.Entities.Music
     public class Musics : BaseEntity,IAuditedEntity
     {
         public string Name { get; set; }
-     //   public string Path {  get; set; }
+        public string Path {  get; set; }
         public Author Author { get; set; }
         public Guid AuthorId { get; set; }
 
