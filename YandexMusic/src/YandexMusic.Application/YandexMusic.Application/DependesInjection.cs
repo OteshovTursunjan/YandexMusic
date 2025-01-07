@@ -29,6 +29,7 @@ namespace YandexMusic.Application
             services.AddScoped<IPaymentHistoryService, PaymentHistoryService>();
              services.AddScoped<IMusicService, MusicService>();
             services.AddScoped<IGenresService, GenreService>();
+            services.AddScoped<ICardService, CardService>();
             //   services.AddScoped<IFavouriteService, FavouritiesService>();
             // services.AddScoped<IDowloandService,DowloandService>();
             services.AddScoped<ICard_TypeService, Card_TypeService>();

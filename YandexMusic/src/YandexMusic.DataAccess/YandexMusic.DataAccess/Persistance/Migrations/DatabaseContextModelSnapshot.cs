@@ -322,14 +322,12 @@ namespace YandexMusic.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CardId")
+                    b.Property<Guid>("CardTypeId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Card_Number")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("Card_TypeId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Card_Number")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatBy")
                         .HasColumnType("text");
@@ -352,7 +350,7 @@ namespace YandexMusic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Card_TypeId");
+                    b.HasIndex("CardTypeId");
 
                     b.HasIndex("UserId");
 
@@ -685,9 +683,9 @@ namespace YandexMusic.Migrations
 
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Cards", b =>
                 {
-                    b.HasOne("YandexMusics.Core.Entities.Music.Card_Type", "Card_Type")
+                    b.HasOne("YandexMusics.Core.Entities.Music.Card_Type", "CardType")
                         .WithMany("Cards")
-                        .HasForeignKey("Card_TypeId")
+                        .HasForeignKey("CardTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -697,7 +695,7 @@ namespace YandexMusic.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Card_Type");
+                    b.Navigation("CardType");
 
                     b.Navigation("User");
                 });
