@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using YandexMusic.Application.Services;
 using YandexMusic.Application.Services.lmpl;
+using YandexMusic.Application.Services.Impl;
 
 namespace YandexMusic.Application
 {
@@ -26,14 +27,15 @@ namespace YandexMusic.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITarrifTypeService, TarrifTypeService>();
             services.AddScoped<IPaymentHistoryService, PaymentHistoryService>();
-            //  services.AddScoped<IMusicService, MusicService>();
+             services.AddScoped<IMusicService, MusicService>();
             services.AddScoped<IGenresService, GenreService>();
-            //   services.AddScoped<IFavouriteService, FavouritiesService>();
+            services.AddScoped<ICardService, CardService>();
+               services.AddScoped<IFavouriteService, FavouritiesService>();
             // services.AddScoped<IDowloandService,DowloandService>();
             services.AddScoped<ICard_TypeService, Card_TypeService>();
             services.AddScoped<IAuthorService,AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IClaimService, ClaimService>();
+          //services.AddScoped<IClaimService, ClaimService>();
 
          }
 

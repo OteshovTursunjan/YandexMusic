@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YandexMusic.Controllers.user
 {
+    [Authorize(Roles = "Admin")]
     public class CardTypeController : Controller
     {
         private readonly ICard_TypeService _card_TypeService;
@@ -16,7 +18,7 @@ namespace YandexMusic.Controllers.user
         {
             return View();
         }
-        [HttpPost("create-cardtype")]
+        [HttpPost("create-CardType")]
         public async Task<IActionResult> AddCards([FromBody] CardTypeDTO cardTypeDTO)
         {
             if (!ModelState.IsValid)
@@ -25,7 +27,7 @@ namespace YandexMusic.Controllers.user
             var newUser = await _card_TypeService.AddCardrAsync(cardTypeDTO);
             return newUser == null ? NotFound() : Ok(newUser);
         }
-        [HttpPut("update-cards/{Id}")]
+        [HttpPut("update-CardType/{Id}")]
         public async Task<IActionResult> UpdateCards([FromRoute] Guid Id, [FromBody] CardTypeDTO cardTypeDTO)
         {
             if (!ModelState.IsValid)
@@ -33,7 +35,7 @@ namespace YandexMusic.Controllers.user
             var res = await _card_TypeService.UpdateCardAsync(Id, cardTypeDTO);
             return res == null ? NotFound() : Ok(res);
         }
-        [HttpPost("GetCards{id}")]
+        [HttpPost("GetCardType{id}")]
         public async Task<IActionResult> GetCards([FromRoute] Guid id)
         {
             if (!ModelState.IsValid)

@@ -218,6 +218,50 @@ namespace YandexMusic.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid>("Tarrif_TypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UpdateBY")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Tarrif_TypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Account");
+                });
+
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Author", b =>
                 {
                     b.Property<Guid>("Id")
@@ -243,6 +287,74 @@ namespace YandexMusic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Author");
+                });
+
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Card_Type", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBY")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Card_Types");
+                });
+
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Cards", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CardTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Card_Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Expired_Date")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBY")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Dowloands", b =>
@@ -345,9 +457,6 @@ namespace YandexMusic.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AuthotId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("CreatBy")
                         .HasColumnType("text");
 
@@ -358,6 +467,10 @@ namespace YandexMusic.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -376,121 +489,7 @@ namespace YandexMusic.Migrations
                     b.ToTable("Musics");
                 });
 
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Account", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Balance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreatBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<Guid>("Tarrif_TypeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("UpdateBY")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Tarrif_TypeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Account");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Card_Type", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UpdateBY")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Card_Types");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Cards", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Card_Number")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("Card_TypeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Expired_Date")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UpdateBY")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Card_TypeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Cards");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Payment_History", b =>
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Payment_History", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -531,7 +530,7 @@ namespace YandexMusic.Migrations
                     b.ToTable("Payment_History");
                 });
 
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Tarrif_Type", b =>
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Tarrif_Type", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -561,7 +560,7 @@ namespace YandexMusic.Migrations
                     b.ToTable("Tarrif_Types");
                 });
 
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.User", b =>
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -593,9 +592,8 @@ namespace YandexMusic.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -663,6 +661,44 @@ namespace YandexMusic.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Account", b =>
+                {
+                    b.HasOne("YandexMusics.Core.Entities.Music.Tarrif_Type", "TarifId")
+                        .WithMany("Accounts")
+                        .HasForeignKey("Tarrif_TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YandexMusics.Core.Entities.Music.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TarifId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Cards", b =>
+                {
+                    b.HasOne("YandexMusics.Core.Entities.Music.Card_Type", "CardType")
+                        .WithMany("Cards")
+                        .HasForeignKey("CardTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YandexMusics.Core.Entities.Music.User", "User")
+                        .WithMany("Cards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CardType");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Dowloands", b =>
                 {
                     b.HasOne("YandexMusics.Core.Entities.Music.Musics", "Music")
@@ -676,7 +712,7 @@ namespace YandexMusic.Migrations
 
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Favourities", b =>
                 {
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Account", "Account")
+                    b.HasOne("YandexMusics.Core.Entities.Music.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -712,59 +748,21 @@ namespace YandexMusic.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Account", b =>
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Payment_History", b =>
                 {
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Tarrif_Type", "TarifId")
-                        .WithMany("Accounts")
-                        .HasForeignKey("Tarrif_TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YandexMusics.Core.Entities.Musics.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TarifId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Cards", b =>
-                {
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Card_Type", "Card_Type")
-                        .WithMany("Cards")
-                        .HasForeignKey("Card_TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YandexMusics.Core.Entities.Musics.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card_Type");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Payment_History", b =>
-                {
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Account", "Account")
+                    b.HasOne("YandexMusics.Core.Entities.Music.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Card_Type", "CardType")
+                    b.HasOne("YandexMusics.Core.Entities.Music.Card_Type", "CardType")
                         .WithMany()
                         .HasForeignKey("CardTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YandexMusics.Core.Entities.Musics.Tarrif_Type", "TarrifType")
+                    b.HasOne("YandexMusics.Core.Entities.Music.Tarrif_Type", "TarrifType")
                         .WithMany()
                         .HasForeignKey("Tarrif_TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -782,19 +780,24 @@ namespace YandexMusic.Migrations
                     b.Navigation("musics");
                 });
 
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Card_Type", b =>
+                {
+                    b.Navigation("Cards");
+                });
+
             modelBuilder.Entity("YandexMusics.Core.Entities.Music.Genres", b =>
                 {
                     b.Navigation("musics");
                 });
 
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Card_Type", b =>
-                {
-                    b.Navigation("Cards");
-                });
-
-            modelBuilder.Entity("YandexMusics.Core.Entities.Musics.Tarrif_Type", b =>
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.Tarrif_Type", b =>
                 {
                     b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("YandexMusics.Core.Entities.Music.User", b =>
+                {
+                    b.Navigation("Cards");
                 });
 #pragma warning restore 612, 618
         }

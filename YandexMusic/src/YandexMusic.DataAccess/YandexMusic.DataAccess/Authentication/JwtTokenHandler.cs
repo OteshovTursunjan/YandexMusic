@@ -1,15 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.DataAccess.Authentication
 {
@@ -21,12 +17,22 @@ namespace YandexMusic.DataAccess.Authentication
         {
             jwtOption = options.Value;
         }
-        public JwtSecurityToken GenerateAccesToken(UserForCreationDTO user)
+        public JwtSecurityToken GenerateAccesToken(User user)
         {
             var claims = new List<Claim>
+    {
+        new Claim(CustomClaim.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role.ToString()),
+        new Claim(CustomClaim.Id, user.Id.ToString())
+       
+    };
+            if (string.IsNullOrEmpty(jwtOption.SecretKey) ||
+    string.IsNullOrEmpty(jwtOption.Issuer) ||
+    string.IsNullOrEmpty(jwtOption.Audience))
             {
-                new Claim(CustomClaim.Email , user.Email)
-            };
+                throw new ArgumentNullException("JWT options are not configured properly.");
+            }
+
 
             var authSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(this.jwtOption.SecretKey));
@@ -34,15 +40,18 @@ namespace YandexMusic.DataAccess.Authentication
             var token = new JwtSecurityToken(
                 issuer: this.jwtOption.Issuer,
                 audience: this.jwtOption.Audience,
-                expires: DateTime.UtcNow.AddMinutes(this.jwtOption.ExpirationIntMinutes),
+                expires: DateTime.UtcNow.AddMinutes(this.jwtOption.ExpirationInMinutes),
+
                 claims: claims,
                 signingCredentials: new SigningCredentials(
-                 key:authSigningKey,
-                 algorithm: SecurityAlgorithms.HmacSha256
-                    )
-                );
+                    key: authSigningKey,
+                    algorithm: SecurityAlgorithms.HmacSha256)
+            );
+
             return token;
         }
+
+
         public string GenerateRefreshToken()
         {
             byte[] bytes = new byte[64];

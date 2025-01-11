@@ -26,13 +26,11 @@ namespace YandexMusic.DataAccess.Authentication
 
         public bool Verify(string hash, string password, string salt)
         {
-            // Compare the provided hash with the one generated from the input
             return hash == Encrypt(password, salt);
         }
 
         public static string GenerateSalt(int size = 16)
         {
-            // Generate a cryptographically secure random salt
             var saltBytes = new byte[size];
             using (var rng = RandomNumberGenerator.Create())
             {

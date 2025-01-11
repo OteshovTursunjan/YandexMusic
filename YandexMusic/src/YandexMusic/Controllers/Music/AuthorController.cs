@@ -48,7 +48,7 @@ namespace YandexMusic.Controllers.Music
             return res == null ? NotFound() : Ok(res);
 
         }
-        [HttpPost("DeletAuthor{id}")]
+        [HttpDelete("DeletAuthor{id}")]
         public async Task<IActionResult> DeleteAuthor([FromRoute,] Guid id)
         {
             if (!ModelState.IsValid)

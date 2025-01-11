@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 namespace YandexMusic.DataAccess.Authentication
 {
     public interface IJwtTokenHandler
     {
-        JwtSecurityToken GenerateAccesToken(UserForCreationDTO user);
-        string GenerateRefreshToken();
+        JwtSecurityToken GenerateAccesToken(User user);
+            string GenerateRefreshToken();
     }
 }
