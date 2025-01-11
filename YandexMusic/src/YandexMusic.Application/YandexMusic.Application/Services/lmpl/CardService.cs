@@ -1,6 +1,7 @@
-﻿using YandexMusic.DataAccess;
+﻿using Microsoft.AspNetCore.Http;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
+using YandexMusic.DataAccess.ReturnDTO;
 using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services.lmpl
@@ -54,6 +55,11 @@ namespace YandexMusic.Application.Services.lmpl
             {
                 throw new Exception("This card does not exist");
             }
+            // = _cardsRepository.GetFirstAsync(u => u.Card_Number == cardsDTO.cardNumber);
+            //if (existCard != null)
+           // {
+             //   throw new Exception("This cards is already exist");
+            //}
             var newCard = new Cards
             {
                 CardTypeId = card,
@@ -65,7 +71,6 @@ namespace YandexMusic.Application.Services.lmpl
             var username = await _userRepository.GetFirstAsync(u => u.Id == cardsDTO.UserID);
             try
             {
-
                 await _cardsRepository.AddAsync(newCard);
             }
             catch (Exception ex)
@@ -82,10 +87,13 @@ namespace YandexMusic.Application.Services.lmpl
             };
 
         }
-        public async Task<CardReturnDTO> GetById(Guid id)
+        public async Task<CardReturnDTO> GetCards(Guid id)
         {
-            var card = await _cardsRepository.GetFirstAsync(u => u.Id == id);
+            
+
+            var card = await _cardsRepository.GetFirstAsync(u => u.UserId == id);
             var user = await _userRepository.GetFirstAsync(u => u.Id == card.UserId);
+
             var cardN = await _card_TypeRepository.GetFirstAsync(u => u.Id == card.CardTypeId);
 
             if (card == null)
@@ -99,6 +107,15 @@ namespace YandexMusic.Application.Services.lmpl
                 ExpiredDate = card.Expired_Date,
                 CardName = cardN.Name,
             };
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            if (id == null)
+                throw new Exception("id is null");
+            var cards = await _cardsRepository.GetFirstAsync(u => u.Id == id);
+            await _cardsRepository.DeleteAsync(cards);
+            return true;
         }
 
     }

@@ -12,7 +12,7 @@ namespace YandexMusic.Application.Services
     {
         Task<PaymentHistoryDTO> GetByIdAsync(Guid id);
         Task<List<PaymentHistoryDTO>> GetAllAsync();
-        Task<Payment_History> AddPaymentAsync(PaymentHistoryDTO payment_History);
+        Task<bool> AddPaymentAsync(PaymentHistoryDTO payment_History);
         Task<Payment_History> UpdatePaymentAsync(Guid id, PaymentHistoryDTO payment_History);
         Task<bool> DeletePaymentAsync(Guid id);
 

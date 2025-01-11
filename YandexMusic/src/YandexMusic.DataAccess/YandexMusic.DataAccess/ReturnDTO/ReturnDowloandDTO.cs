@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YandexMusics.Core.Entities.Enum
+namespace YandexMusic.DataAccess.ReturnDTO
 {
-    public enum Roles
+    internal class ReturnDowloandDTO
     {
-        Candidate =1,
-        Admin,
-        User
     }
 }

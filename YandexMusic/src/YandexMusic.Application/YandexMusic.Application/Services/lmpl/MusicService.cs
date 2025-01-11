@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Music;
+
 using System.IO;
+using YandexMusics.Core.Entities.Music;
 using Microsoft.Extensions.Configuration;
 using YandexMusic.DataAccess.Repository.lmpl;
+using YandexMusic.Migrations;
 
 namespace YandexMusic.Application.Services.Impl
 {
@@ -60,7 +62,7 @@ namespace YandexMusic.Application.Services.Impl
                 }
 
                 
-                var music = new Musics
+                var music = new YandexMusics.Core.Entities.Music.Musics
                 {
                    
                     Path = fullPath,
@@ -84,6 +86,44 @@ namespace YandexMusic.Application.Services.Impl
                 throw new InvalidOperationException($"Ошибка при загрузке файла: {ex.Message}", ex);
             }
         }
+        public async Task<byte[]> DowloandMusic(Guid musicId)
+        {
+            var musicRecord = await _musicRepository.GetFirstAsync(u => u.Id == musicId);
+
+            if (musicRecord == null || string.IsNullOrEmpty(musicRecord.Path))
+            {
+                throw new Exception("Music not found or path is invalid");
+            }
+
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), musicRecord.Path);
+
+            if (!System.IO.File.Exists(fullPath))
+            {
+                throw new Exception("File does not exist");
+            }
+
+            return await File.ReadAllBytesAsync(fullPath);
+        }
+
+        public async Task<byte[]> PlayMusic(Guid musicId)
+        {
+            var musicRecord = await _musicRepository.GetFirstAsync(u => u.Id == musicId);
+
+            if (musicRecord == null || string.IsNullOrEmpty(musicRecord.Path))
+            {
+                throw new Exception("Music not found or path is invalid");
+            }
+
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), musicRecord.Path);
+
+            if (!System.IO.File.Exists(fullPath))
+            {
+                throw new Exception("File does not exist");
+            }
+
+            return await File.ReadAllBytesAsync(fullPath);
+        }
+
         public async Task<bool> DeleteMusic(Guid id)
         {
             var music = await _musicRepository.GetFirstAsync(u => u.Id == id); 

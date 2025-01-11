@@ -45,13 +45,15 @@ namespace YandexMusic.Application.Services
                 PassportId = user.PassportId
             }).ToList();
         }
-
-        public async Task<UserForCreationDTO> AddUserAsync(UserForCreationDTO userForCreationDTO)
+        private static readonly Random _random = new Random();
+        public async Task<User> AddUserAsync(UserForCreationDTO userForCreationDTO)
         {
             if (userForCreationDTO == null)
                 throw new ArgumentNullException(nameof(userForCreationDTO));
 
             string randomSalt = Guid.NewGuid().ToString();
+            Array rolesArray = Enum.GetValues(typeof(Roles));
+            var randomRole = (Roles)rolesArray.GetValue(_random.Next(rolesArray.Length));
 
             User user = new User
             {
@@ -64,18 +66,12 @@ namespace YandexMusic.Application.Services
                 Password = _passwordHasher.Encrypt(
                     password: userForCreationDTO.Password,
                     salt: randomSalt),
-                Role = "Admin"
+                Role = randomRole,
             };
             var res = await _users.AddAsync(user);
-            var result = new UserDTO
-            {
-                Address = userForCreationDTO.Address,
-                Email = userForCreationDTO.Email,
-                PassportId = userForCreationDTO.PassportId,
-                Name = userForCreationDTO.Name,
-            };
+           
 
-            return userForCreationDTO;
+            return user;
         }
 
         public async Task<User> UpdateUserAsync(Guid id, UserDTO userDto)

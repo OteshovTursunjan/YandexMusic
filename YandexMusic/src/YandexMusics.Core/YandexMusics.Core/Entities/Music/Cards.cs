@@ -16,7 +16,7 @@ namespace YandexMusics.Core.Entities.Music
         public Card_Type CardType { get; set; }  // О
         public Guid CardTypeId { get; set; }
 
-        public string  Card_Number { get; set; }
+        public  string  Card_Number { get; set; }
         public string Expired_Date { get; set; }
         public string? CreatBy { get; set; }
         public DateTime? CreatedOn { get; set; }

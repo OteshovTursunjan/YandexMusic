@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YandexMusic.Controllers.Music
 {
+  //  [Authorize]
     public class GenresController : Controller
     {
         public readonly IGenresService _genresService;

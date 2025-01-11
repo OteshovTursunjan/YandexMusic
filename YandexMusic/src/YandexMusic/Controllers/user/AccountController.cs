@@ -3,9 +3,11 @@ using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 using YandexMusic.Application.Services.lmpl;
 using YandexMusic.Migrations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YandexMusic.Controllers.user
 {
+    //[Authorize]
     public class AccountController : Controller
     {
         public readonly IAccountService accountService;
@@ -24,9 +26,9 @@ namespace YandexMusic.Controllers.user
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var newAccount = accountService.AddAccountAsync(accountDTO);
-            return newAccount == null ? NotFound() : Ok(newAccount);
-        }
+            var newAccount = await accountService.AddAccountAsync(accountDTO);
+            return Ok(newAccount);
+          }
 
         [HttpGet("GetAccount/{id}")]
         public async Task<IActionResult> GetIdAccount([FromRoute] Guid id)

@@ -15,6 +15,23 @@ namespace YandexMusic.Controllers.Music
         {
             return View();
         }
+        [HttpGet("DowloandMusic{id}")]
+        public async Task<IActionResult> DowloandMusic(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var res = await _musicService.DowloandMusic(id);
+            return File(res, "audio/mpeg", $"{id}.mp3");
+        }
+        [HttpGet("PlayMusic{id}")]
+        public async Task<IActionResult> PlayMusic(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var res = await _musicService.PlayMusic(id);
+            return File(res, "audio/mpeg");
+        }
+
         [HttpPost("UploadMusic")]
         public async Task<IActionResult> UploadMusic(IFormFile formFile, MusicDTO musicDTO)
         {

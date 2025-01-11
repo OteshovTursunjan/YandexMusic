@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace YandexMusic.DataAccess.DTOs
 {
-  public   class MusicDTO
+    public  class DowloandDTO
     {
-        public string Name {  get; set; }
-        public Guid AuthotId { get; set; }
-        
-        public Guid GenreId { get; set; }
-
-
+        public Guid MusicID { get; set; }
+        public Guid AccountID { get; set; }
     }
 }

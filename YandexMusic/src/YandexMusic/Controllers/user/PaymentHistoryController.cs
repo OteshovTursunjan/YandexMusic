@@ -19,31 +19,23 @@ namespace YandexMusic.Controllers.user
 
         [HttpGet("GetPayment{id}")]
 
-        public async Task<IActionResult> GetPayment([FromRoute] Guid id)
+        public async Task<IActionResult> GetPayment(Guid id)
         {
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             
-            var payment = _paymentHistoryService.GetByIdAsync(id);
+            var payment = await _paymentHistoryService.GetByIdAsync(id);
             return payment == null ? NotFound() : Ok(payment);
         }
         [HttpPost("AddPayment")]
-        public async Task<IActionResult> AddPaymnet([FromBody]PaymentHistoryDTO paymentHistoryDTO)
+        public async Task<IActionResult> AddPaymnet(PaymentHistoryDTO paymentHistoryDTO)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var payment  = _paymentHistoryService.AddPaymentAsync(paymentHistoryDTO);
+            var payment  = await _paymentHistoryService.AddPaymentAsync(paymentHistoryDTO);
             return Ok(payment);
         }
-        [HttpPut("UpdatePayment{id}")]
-        public async Task<IActionResult> UpdatePayment([FromRoute] Guid id, [FromBody]PaymentHistoryDTO paymentHistoryDTO)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var payment = _paymentHistoryService.UpdatePaymentAsync(id,paymentHistoryDTO);
-            return Ok(payment);
-        }
+       
     }
 }

@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AllMusic\**" />
+    <Compile Remove="Entities\Users\**" />
+    <EmbeddedResource Remove="AllMusic\**" />
+    <EmbeddedResource Remove="Entities\Users\**" />
+    <None Remove="AllMusic\**" />
+    <None Remove="Entities\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
@@ -18,11 +27,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\Users\" />
-    <Folder Include="AllMusic\" />
   </ItemGroup>
 
 </Project>

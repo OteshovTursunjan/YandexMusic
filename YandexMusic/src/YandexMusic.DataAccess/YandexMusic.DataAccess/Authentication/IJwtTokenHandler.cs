@@ -10,7 +10,7 @@ namespace YandexMusic.DataAccess.Authentication
 {
     public interface IJwtTokenHandler
     {
-        JwtSecurityToken GenerateAccesToken(UserForCreationDTO user);
-        string GenerateRefreshToken();
+        JwtSecurityToken GenerateAccesToken(User user);
+            string GenerateRefreshToken();
     }
 }

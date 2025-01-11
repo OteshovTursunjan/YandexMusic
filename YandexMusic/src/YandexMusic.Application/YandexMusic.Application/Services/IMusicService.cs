@@ -12,5 +12,7 @@ namespace YandexMusic.Application.Services
     {
        Task<MusicDTO> CreateMusic(IFormFile file, MusicDTO musicDTO);
         Task<bool> DeleteMusic(Guid id);
+        Task<byte[]> DowloandMusic(Guid musicId);
+        Task<byte[]> PlayMusic(Guid musicId);
     }
 }

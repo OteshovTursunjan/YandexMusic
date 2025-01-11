@@ -31,7 +31,7 @@ namespace YandexMusic.Application.Services.lmpl
 
 
             };
-            _accountRepository.AddAsync(res);
+          await  _accountRepository.AddAsync(res);
 
             var newaccc = new AccountDTO()
             {
