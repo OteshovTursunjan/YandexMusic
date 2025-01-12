@@ -84,7 +84,8 @@ namespace YandexMusic.Application.Services.lmpl
         }
         public async Task<CardReturnDTO> GetById(Guid id)
         {
-            var card = await _cardsRepository.GetFirstAsync(u => u.Id == id);
+           
+            var card = await _cardsRepository.GetFirstAsync(u => u.UserId == id);
             var user = await _userRepository.GetFirstAsync(u => u.Id == card.UserId);
             var cardN = await _card_TypeRepository.GetFirstAsync(u => u.Id == card.CardTypeId);
 

@@ -3,9 +3,13 @@ using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
 using YandexMusic.Application.Services.lmpl;
 using YandexMusic.Migrations;
+using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
+using System.Security.Claims;
 
 namespace YandexMusic.Controllers.user
 {
+    [Authorize(Roles = "User")]
     public class AccountController : Controller
     {
         public readonly IAccountService accountService;
@@ -17,7 +21,25 @@ namespace YandexMusic.Controllers.user
         {
             return View();
         }
-        
+        protected Guid GetUserIdFromToken()
+        {
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
+            }
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                userIdClaim = User.FindFirst("sub")?.Value;
+            }
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token");
+            }
+            return userId;
+        }
         [HttpPost("CreateAccount")]
         public async Task<IActionResult> CreateAccount(AccountDTO accountDTO)
         {
@@ -28,13 +50,12 @@ namespace YandexMusic.Controllers.user
             return newAccount == null ? NotFound() : Ok(newAccount);
         }
 
-        [HttpGet("GetAccount/{id}")]
-        public async Task<IActionResult> GetIdAccount([FromRoute] Guid id)
+        [HttpGet("GetAccount")]
+        public async Task<IActionResult> GetIdAccount()
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var userId = GetUserIdFromToken();
 
-            var account = await accountService.GetByIdAsync(id); // Дождитесь завершения задачи
+            var account = await accountService.GetByIdAsync(userId); // Дождитесь завершения задачи
             return account == null ? NotFound() : Ok(account);
         }
 

@@ -36,6 +36,7 @@ namespace YandexMusic.Application
             services.AddScoped<IAuthorService,AuthorService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IClaimService, ClaimService>();
+            services.AddScoped<TokenService, TokenService>();
 
          }
 

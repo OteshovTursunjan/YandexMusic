@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YandexMusics.Core.Common;
-using YandexMusics.Core.Entities.Enum;
 
 namespace YandexMusics.Core.Entities.Music
 {
@@ -15,7 +14,7 @@ namespace YandexMusics.Core.Entities.Music
         public string Address { get; set; }
         public string PassportId { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
+        public Roles Role { get; set; } =  Roles.User;
         public string Salt { get; set; }
 
         public ICollection<Cards>? Cards { get; set; }
@@ -25,4 +24,9 @@ namespace YandexMusics.Core.Entities.Music
         public string? UpdateBY { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
+}
+public enum Roles
+{
+    User = 1,
+    Admin = 2
 }
