@@ -7,7 +7,7 @@ using YandexMusic.DataAccess.DTOs;
 
 namespace YandexMusic.Controllers.user
 {
-    [Authorize]
+   // [Authorize]
     public class CardsController : Controller
     {
         public readonly ICardService _cardService;
