@@ -8,9 +8,7 @@ using YandexMusic.DataAccess.Persistance;
 using Yandex.Shared.Service;
 using Yandex.Shared.Service.lmpl;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+
 using Quartz;
 using Microsoft.Extensions.DependencyInjection;
 using YandexMusics.Core.Entities.Music;
