@@ -13,7 +13,8 @@ namespace YandexMusic.Application.Services
     {
         Task UploadFileAsync(string fileName, MusicDTO musicDTO, Stream fileStream);
         Task<Stream> GetFileAsync(string fileName);
+        Task<(MemoryStream Stream, string ContentType)> GetMusic();
         Task<bool> FileExistsAsync(string fileName);
-
-    }
+        Task DeleteFileAsync(Guid id);
+        Task<(MemoryStream Stream, string ContentType)> GetMusicAsync(Guid id);    }
 }

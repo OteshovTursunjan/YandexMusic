@@ -18,9 +18,28 @@ namespace YandexMusic.Controllers.Music
         {
             return View();
         }
-      
+        [HttpGet("Get")]
+        public async Task<IActionResult> GetMusic(Guid id)
+        {
+            try
+            {
+                var (stream, contentType) = await _minoService.GetMusicAsync(id);
+                return File(stream, contentType, enableRangeProcessing: true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpGet("GetMusics")]
+        public async Task<IActionResult> GetMusics()
+        {
+            var (stream, contentType) = await _minoService.GetMusic();
+            return File(stream, contentType);
+        }
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadMusic(IFormFile file, MusicDTO musicDTO)
+        public async Task<IActionResult> UploadMusic(IFormFile file,  MusicDTO musicDTO)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("Invalid file.");
@@ -35,8 +54,8 @@ namespace YandexMusic.Controllers.Music
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var res = await _musicService.DeleteMusic(id);
-            return res == null ? NotFound() : Ok(res);
+             await _minoService.DeleteFileAsync(id);
+           return Ok("File is deleted");
         }
     }
 }

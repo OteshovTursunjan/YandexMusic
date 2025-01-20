@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
-using System;
 using System.IO;
-using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
+using YandexMusic.DataAccess.Persistance;
 using YandexMusic.DataAccess.Repository;
-using YandexMusic.DataAccess.Repository.lmpl;
 using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services.Impl
@@ -19,9 +18,11 @@ namespace YandexMusic.Application.Services.Impl
         private readonly string _bucketName;
         private readonly string _endpoint;
         private readonly IMusicRepository musicRepository;
+        private readonly DatabaseContext _databaseContext;
 
-        public MinioService(IConfiguration configuration , IMusicRepository musicRepository)
+        public MinioService(IConfiguration configuration, IMusicRepository musicRepository,DatabaseContext databaseContext)
         {
+            _databaseContext = databaseContext;
             this.musicRepository = musicRepository;
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -61,7 +62,7 @@ namespace YandexMusic.Application.Services.Impl
             }
         }
 
-        public async Task UploadFileAsync(string  fileName, MusicDTO musicDTO, Stream fileStream)
+        public async Task UploadFileAsync(string fileName, MusicDTO musicDTO, Stream fileStream)
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentException("File name cannot be empty", nameof(fileName));
@@ -77,8 +78,7 @@ namespace YandexMusic.Application.Services.Impl
                     .WithStreamData(fileStream)
                     .WithObjectSize(fileStream.Length)
                     .WithContentType(GetContentType(fileName));
-                var fileUrl = $"http://9001/{_bucketName}/{fileName}";
-                //http://localhost:9001/browser/yandexmuics/%D0%A4%D0%9E%D0%93%D0%95%D0%9B%D0%AC-%D0%9C%D0%90%D0%9B%D0%AC%D0%A7%D0%98%D0%9A.mp3
+                var fileUrl = $"http://localhost:9001/browser/yandexmuics/{fileName}";
                 await _minioClient.PutObjectAsync(putObjectArgs);
                 var newMusic = new Musics
                 {
@@ -88,7 +88,7 @@ namespace YandexMusic.Application.Services.Impl
                     GenreId = musicDTO.GenreId,
                 };
                 await musicRepository.AddAsync(newMusic);
-                
+
             }
             catch (MinioException ex)
             {
@@ -125,6 +125,50 @@ namespace YandexMusic.Application.Services.Impl
             }
         }
 
+        public async Task<(MemoryStream Stream, string ContentType)> GetMusic()
+        {
+            try
+            {
+               
+                var randomMusic = await _databaseContext.Musics
+                    .FromSqlRaw("SELECT * FROM \"Musics\" ORDER BY RANDOM() LIMIT 1")
+                    .AsNoTracking() 
+                    .FirstOrDefaultAsync();
+
+                if (randomMusic == null)
+                {
+                    throw new Exception("No music was found.");
+                }
+
+              
+                var fileName = GetFileNameFromUrl(randomMusic.Path);
+                var memory = new MemoryStream();
+
+                var getobjects = new GetObjectArgs()
+                    .WithBucket(_bucketName)
+                    .WithObject(fileName)
+                    .WithCallbackStream(stream =>
+                    {
+                        stream.CopyTo(memory);
+                        memory.Position = 0; 
+                    });
+
+                await _minioClient.GetObjectAsync(getobjects);
+
+                return (memory, "audio/mpeg");
+            }
+            catch (MinioException ex)
+            {
+                throw new Exception($"Error fetching file from MinIO: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred: {ex.Message}");
+            }
+        }
+
+
+
         public async Task<bool> FileExistsAsync(string fileName)
         {
             try
@@ -152,6 +196,90 @@ namespace YandexMusic.Application.Services.Impl
                 ".m4a" => "audio/mp4",
                 _ => "application/octet-stream"
             };
+        }
+        public async Task<(MemoryStream Stream, string ContentType)> GetMusicAsync(Guid id)
+        {
+            var music = await musicRepository.GetFirstAsync(u => u.Id == id);
+            if (music == null)
+            {
+                throw new Exception("Music does not exist");
+            }
+
+            var fileUrl = music.Path;
+            var fileName = GetFileNameFromUrl(fileUrl);
+
+            Console.WriteLine($"Attempting to fetch file: {fileName} from bucket: {_bucketName}");
+
+            try
+            {
+                var memoryStream = new MemoryStream();
+                var getObject = new GetObjectArgs()
+                    .WithBucket(_bucketName)
+                    .WithObject(fileName)
+                    .WithCallbackStream(stream =>
+                    {
+                         stream.CopyTo(memoryStream);
+                       
+                    });
+
+                await _minioClient.GetObjectAsync(getObject);
+                memoryStream.Position = 0;
+
+                Console.WriteLine($"Stream length: {memoryStream.Length}");
+
+                return (memoryStream, "audio/mpeg");
+            }
+            catch (MinioException ex)
+            {
+                Console.WriteLine($"MinIO Exception: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                throw new Exception($"Error fetching file from MinIO: {ex.Message}");
+            }
+        }
+
+        public async Task DeleteFileAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("ID cannot be empty", nameof(id));
+
+            var music = await musicRepository.GetFirstAsync(u => u.Id == id);
+            if (music == null)
+                throw new InvalidOperationException($"Music record with ID {id} not found.");
+
+            var fileUrl = music.Path;
+            var fileName = GetFileNameFromUrl(fileUrl);
+
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new InvalidOperationException("Invalid file URL in database record.");
+
+            try
+            {
+                var removeObjectArgs = new RemoveObjectArgs()
+                    .WithBucket(_bucketName)
+                    .WithObject(fileName);
+
+                await _minioClient.RemoveObjectAsync(removeObjectArgs);
+                await musicRepository.DeleteAsync(music);
+             
+            }
+            catch (MinioException ex)
+            {
+                throw new InvalidOperationException($"Failed to delete file {fileName} from Minio: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to delete record with ID {id}: {ex.Message}", ex);
+            }
+        }
+        private string GetFileNameFromUrl(string url)
+        {
+            return url?.Split('/').LastOrDefault();
+        }
+        private string GetObjectKeyFromPath(string path)
+        {
+            var uri = new Uri(path);
+            var segments = uri.AbsolutePath.Split('/');
+            return string.Join("/", segments[3..]);
         }
     }
 }

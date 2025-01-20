@@ -2,12 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Persistance;
 using YandexMusic.DataAccess.Repository;
 using YandexMusics.Core.Entities.Music;
@@ -75,7 +69,7 @@ namespace YandexMusic.Application.Quartz
                 var paymentHistory = new Payment_History()
                 {
                     AccountId = account.Id,
-                   
+
                     TarrifType = account.TarifId,
                     Tarrif_TypeId = account.Tarrif_TypeId,
                     CardTypeId = card.CardTypeId, // Set appropriate default or get from configuration
@@ -90,13 +84,13 @@ namespace YandexMusic.Application.Quartz
                     // Process payment
                     account.Balance -= account.TarifId.Amount;
                     paymentHistory.IsPaid = true;
-                await _accountRepository.UpdateAsync(account);
+                    await _accountRepository.UpdateAsync(account);
 
                     _logger.LogInformation(
                         "Successfully processed payment for account {AccountId}. " +
                         "Amount: {Amount}, New Balance: {NewBalance}",
                         account.Id, account.TarifId.Amount, account.Balance);
-                await _payment_HistoryRepository.AddAsync(paymentHistory);
+                    await _payment_HistoryRepository.AddAsync(paymentHistory);
                 }
                 else
                 {

@@ -18,7 +18,7 @@ namespace YandexMusic.Application.Services.lmpl
         {
             _authorRepository = authorRepository;
         }
-        public Task<Author> AddAuthorAsync(AuthorDTO authorDTO)
+        public async  Task<Author> AddAuthorAsync(AuthorDTO authorDTO)
         {
             if(authorDTO == null)
                 throw new ArgumentNullException(nameof(authorDTO));
@@ -26,8 +26,8 @@ namespace YandexMusic.Application.Services.lmpl
             {
                 AuthorName = authorDTO.Authorname
             };
-            _authorRepository.AddAsync(author);
-            return Task.FromResult(author);
+           await  _authorRepository.AddAsync(author);
+            return author;
         }
 
         public async Task<bool> DeleteAuthorAsync(Guid id)
