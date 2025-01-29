@@ -16,15 +16,15 @@ namespace YandexMusic.Controllers.user
         {
             return View();
         }
-        [HttpPost("{Create-Tarrif}")]
+        [HttpPost("Create-Tarrif")]
         public async Task<IActionResult> AddTarrif(TarrifTypeDTO tarrifTypeDTO)
         {
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var newTarrif = tarrifTypeService.AddTarrifAsync(tarrifTypeDTO);
-            return newTarrif == null ? NotFound() : Ok(newTarrif);
+            var newTarrif = await tarrifTypeService.AddTarrifAsync(tarrifTypeDTO);
+            return  newTarrif == null ? NotFound() : Ok(newTarrif);
         }
         [HttpPut("UpdateTarrif")]
         public async Task<IActionResult> UpdateTarrif([FromRoute] Guid id, [FromBody] TarrifTypeDTO tarrif)

@@ -26,7 +26,7 @@ namespace YandexMusic.Application.Services.lmpl
                 Type = tarrifTypeDto.Type,
                 Amount = tarrifTypeDto.Amount,
             };
-           await _typeRepository.AddAsync(res);
+            await _typeRepository.AddAsync(res);
             return tarrifTypeDto;
         }
 

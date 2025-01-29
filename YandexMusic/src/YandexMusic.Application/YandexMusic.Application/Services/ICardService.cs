@@ -10,7 +10,7 @@ namespace YandexMusic.Application.Services
 {
     public interface ICardService
     {
-        Task<CardReturnDTO> CreateCard(CardDTO cardsDTO);
+        Task<string> CreateCard(CardDTO cardsDTO);
         Task<CardReturnDTO> GetById(Guid id);
     }
 }

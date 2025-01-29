@@ -17,7 +17,7 @@ namespace YandexMusic.Application.Services.lmpl
             _userRepository = userRepository;
             _card_TypeRepository = card_TypeRepository;
         }
-        public async Task<CardReturnDTO> CreateCard(CardDTO cardsDTO)
+        public async Task<string> CreateCard(CardDTO cardsDTO)
         {
             if (cardsDTO == null)
             {
@@ -73,13 +73,7 @@ namespace YandexMusic.Application.Services.lmpl
 
                 throw;
             }
-            return new CardReturnDTO
-            {
-                cardNumber = cardsDTO.cardNumber,
-                ExpiredDate = cardsDTO.ExpiredDate,
-                CardName = cardName,
-                UserName = username.Name
-            };
+            return "New Card add Succesfuly";
 
         }
         public async Task<CardReturnDTO> GetById(Guid id)
