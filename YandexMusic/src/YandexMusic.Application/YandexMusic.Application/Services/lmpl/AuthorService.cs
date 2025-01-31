@@ -54,9 +54,6 @@ namespace YandexMusic.Application.Services.lmpl
             {
                 Authorname = author.AuthorName
             };
-
-
-          
         }
 
         public async Task<YandexMusics.Core.Entities.Music.Author> UpdateAuthorAsync(Guid id, AuthorDTO authorDTO)

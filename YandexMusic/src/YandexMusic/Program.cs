@@ -15,17 +15,34 @@ using YandexMusics.Core.Entities.Music;
 using YandexMusic.Application.Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddQuartz(q =>
+//{
+//    var jobKey = new JobKey("MonthlyPaymnet");
+//    q.AddJob<MonthlyPaymnet>(opts => opts.WithIdentity(jobKey));
+//    q.AddTrigger(opts => opts
+//        .ForJob(jobKey)
+//        .WithIdentity("MonthlyPaymentTrigger")
+//        .WithCronSchedule("0 0 0 1 * ?"));
+
+//});
+
+
 builder.Services.AddQuartz(q =>
 {
-    var jobKey = new JobKey("MonthlyPaymnet");
-    q.AddJob<MonthlyPaymnet>(opts => opts.WithIdentity(jobKey));
+    q.AddJob<DailyLogging>(opts => opts.WithIdentity("DailyLogging", "group1"));
+
     q.AddTrigger(opts => opts
-        .ForJob(jobKey)
-        .WithIdentity("MonthlyPaymentTrigger")
-        .WithCronSchedule("0 0 0 1 * ?"));
+        .ForJob("DailyLogging", "group1") // Имя совпадает с AddJob
+        .WithIdentity("DailyTrigger", "group1")
+        .StartNow()
+        .WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()));
 });
 
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
+
+//builder.Services.AddQuartzHostedService(z => z.WaitForJobsToComplete = true);
+
 builder.Services.AddControllers(
     config => config.Filters.Add(typeof(ValidMethodAtributecs))
 );
@@ -73,7 +90,7 @@ app.UseMiddleware<PerformanceMiddleware>();
 app.UseMiddleware<TransactionMiddleware>();
 app.UseMiddleware<ExceptionHandlerMiddlewear>();
 app.UseMiddleware<UserIdMiddleware>();  // Добавьте middleware здесь
-
+app.UseMiddleware<LogginMiddleware>();
 app.MapControllers();
 
 app.Run();

@@ -33,6 +33,7 @@ public class DatabaseContext : IdentityDbContext<ApplicationUser>
     public DbSet<Payment_History> Payment_History { get; set; }
     public DbSet<Tarrif_Type> Tarrif_Types { get; set; }
     public DbSet<User> User { get; set; }
+    public DbSet<Logging> Logging {  get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

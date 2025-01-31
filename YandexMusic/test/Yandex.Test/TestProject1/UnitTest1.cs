@@ -11,7 +11,7 @@ public class UnitTest1
    
      private readonly Mock<ICardService> _cardServiceMock;
      private readonly Mock<IGenresService> _genresServiceMock;
-    private readonly Mock<ITarrifTypeService> _tarriftypeService;
+     private readonly Mock<ITarrifTypeService> _tarriftypeService;
    
     public UnitTest1()
     {
@@ -20,9 +20,10 @@ public class UnitTest1
         _tarriftypeService = new Mock<ITarrifTypeService>();
 
     }
-    [Fact]
+    [Fact] //Атбрибут xUnit, обозначающий что этот атрибу тестовый
     public async Task CardCreationTest_ShouldReturnSuccess()
     {
+        // Arrange  Подготовка
         var CardDTo = new CardDTO()
         {
             cardNumber = "4321124596357841",
@@ -34,41 +35,55 @@ public class UnitTest1
             .ReturnsAsync("New Card add Succesfuly");
 
         var service = _cardServiceMock.Object;
+        // Act  Действия 
 
         string result = await service.CreateCard(CardDTo);
+        // Assert Проверка
 
         Assert.Equal("New Card add Succesfuly", result);
     }
     [Fact]
-    public async Task DeleteGenre_ShouldReturn()
+    public async Task DeleteGenre_ShouldReturnTrue()
     {
-        Guid id = Guid.Parse("01946997-d975-7084-b6ed-f58c2b15e132");
+        //Arrange  Preparation 
+        Guid id = Guid.Parse("01946997-d975-7084-b6ed-f58c2b15e185");
+        
+
+        //Создается фейковый сервис 
         _genresServiceMock
             .Setup(service => service.DeleteGenresAsync(id))
             .ReturnsAsync(true);
 
-        var service = _genresServiceMock.Object;
 
-        bool result = await service.DeleteGenresAsync(id);
-        Assert.True(result);
+        //Act  Действия 
+        //Получаем объект из мок объекта теперь service работет как в Setup
+        var service = _genresServiceMock.Object; 
+
+
+        // Assert Сhecnking 
+        bool result = await service.DeleteGenresAsync(id); // Running  moc-object 
+
+
+        Assert.True(result); //Result checking  
 
     }
-    [Fact]
-    public async void AddTarrif_ReturnsOKResult()
+    [Fact] //Атбрибут xUnit, обозначающий что этот атрибу тестовый
+    public async void AddTarrif_ReturnsOKResult() 
     {
-
         var newTarrif = new TarrifTypeDTO() { Amount = 100, Type = "Super" };
         _tarriftypeService.Setup(service => service.AddTarrifAsync(newTarrif)).ReturnsAsync(newTarrif);
 
-        var controller = new TarrifTypeController(_tarriftypeService.Object);
 
+        var controller = new TarrifTypeController(_tarriftypeService.Object);
         var result  = await controller.AddTarrif(newTarrif);
 
-        var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<TarrifTypeDTO>(okResult.Value);
+
+        var okResult = Assert.IsType<OkObjectResult>(result); // Вернул HTTP 200
+        var returnValue = Assert.IsType<TarrifTypeDTO>(okResult.Value); // возрашает иммено DTO а не другое 
         Assert.Equal(100, returnValue.Amount); 
         Assert.Equal("Super", returnValue.Type);
     }
+
     
 }
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using YandexMusic.DataAccess.Persistance;
@@ -11,9 +12,11 @@ using YandexMusic.DataAccess.Persistance;
 namespace YandexMusic.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250129191115_Logs")]
+    partial class Logs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -461,6 +464,7 @@ namespace YandexMusic.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Exception")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Level")

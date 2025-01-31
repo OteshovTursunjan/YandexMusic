@@ -110,7 +110,5 @@ namespace YandexMusic.Application.Services
             await _users.DeleteAsync(user);
             return true;
         }
-
-
     }
 }

@@ -125,8 +125,7 @@ namespace YandexMusic.Application.Quartz
                 // Create a trigger
                 q.AddTrigger(opts => opts
                     .ForJob(jobKey)
-                    .WithIdentity("MonthlyPaymentTrigger")
-                    .WithCronSchedule("0 0 0 1 * ?")); // Runs at midnight on the 1st day of every month
+                    .WithIdentity("MonthlyPaymentTrigger").StartNow());// Runs at midnight on the 1st day of every month
             });
 
             // Add the Quartz hosted service
