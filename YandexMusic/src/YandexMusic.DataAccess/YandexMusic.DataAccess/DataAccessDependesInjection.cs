@@ -41,6 +41,7 @@ public static class DataAccessDependesInjection
         services.AddScoped<ITarrift_TypeRepository, Tarrif_TypeRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IMusicRepository , MusicRepository>();
         services.AddScoped<IJwtTokenHandler, JwtTokenHandler>();
     }
 
@@ -86,7 +87,7 @@ public static class DataAccessDependesInjection
     }
 }
 
-// TODO move outside?
+
 public class DatabaseConfiguration
 {
     public bool UseInMemoryDatabase { get; set; }

@@ -20,4 +20,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Users\" />
+    <Folder Include="AllMusic\" />
+  </ItemGroup>
+
 </Project>

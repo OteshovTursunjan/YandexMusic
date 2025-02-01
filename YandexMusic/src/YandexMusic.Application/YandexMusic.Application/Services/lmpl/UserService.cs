@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using YandexMusic.DataAccess.DTOs;
-using YandexMusic.Application.Services;
 using YandexMusic.DataAccess.Authentication;
+using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Enum;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services
 {
@@ -22,11 +17,11 @@ namespace YandexMusic.Application.Services
             _users = userRepository;
             _passwordHasher = passwordHasher;
         }
-      
+
         public async Task<UserDTO> GetByIdAsync(Guid id)
         {
             var user = await _users.GetFirstAsync(u => u.Id == id);
-            
+
 
             if (user == null)
                 return null;
@@ -51,14 +46,16 @@ namespace YandexMusic.Application.Services
                 PassportId = user.PassportId
             }).ToList();
         }
+        private static readonly Random _random = new Random();
 
-        public async Task<UserForCreationDTO> AddUserAsync(UserForCreationDTO userForCreationDTO)
+        public async Task<User> AddUserAsync(UserForCreationDTO userForCreationDTO)
         {
             if (userForCreationDTO == null)
                 throw new ArgumentNullException(nameof(userForCreationDTO));
 
             string randomSalt = Guid.NewGuid().ToString();
-
+            Array rolesArray = Enum.GetValues(typeof(Roles));
+            var randomRole = (Roles)rolesArray.GetValue(_random.Next(rolesArray.Length));
             User user = new User
             {
                 Name = userForCreationDTO.Name,
@@ -70,42 +67,36 @@ namespace YandexMusic.Application.Services
                 Password = _passwordHasher.Encrypt(
                     password: userForCreationDTO.Password,
                     salt: randomSalt),
-                Role = "Admin"
+
+                Role = randomRole
             };
             var res = await _users.AddAsync(user);
-            var result = new UserDTO
-            {
-                Address = userForCreationDTO.Address,
-                Email = userForCreationDTO.Email,
-                PassportId = userForCreationDTO.PassportId,
-                Name = userForCreationDTO.Name,
-            };
-            
-            return userForCreationDTO;
+
+            return user;
         }
 
         public async Task<User> UpdateUserAsync(Guid id, UserDTO userDto)
         {
-            
+
             if (userDto == null)
                 throw new ArgumentNullException(nameof(userDto), "UserDTO cannot be null.");
 
-            
+
             var user = await _users.GetFirstAsync(u => u.Id == id);
 
             if (user == null)
                 return null;
 
-            
+
             user.Name = userDto.Name;
             user.Email = userDto.Email;
             user.Address = userDto.Address;
             user.PassportId = userDto.PassportId;
 
-          
+
             await _users.UpdateAsync(user);
 
-            return user; 
+            return user;
         }
 
 
@@ -119,7 +110,5 @@ namespace YandexMusic.Application.Services
             await _users.DeleteAsync(user);
             return true;
         }
-
-       
     }
 }

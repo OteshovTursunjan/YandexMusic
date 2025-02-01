@@ -41,5 +41,11 @@ namespace YandexMusic.Controllers.user
             var res = await _card_TypeService.GetByIdAsync(id);
             return res == null ? NotFound() : Ok(res);
         }
+        [HttpGet("Time")]
+        public async Task<IActionResult> GetTime()
+        {
+            var time = DateTime.Now;
+            return time == null ? NotFound() : Ok(time);
+        }
     }
 }

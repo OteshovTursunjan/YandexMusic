@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
-using YandexMusics.Core.Entities.Musics;
+using YandexMusics.Core.Entities.Music;
 
 namespace YandexMusic.Application.Services.lmpl
 {
@@ -19,17 +19,8 @@ namespace YandexMusic.Application.Services.lmpl
 
         public Task<Payment_History> AddPaymentAsync(PaymentHistoryDTO payment_History)
         {
-            if (payment_History == null)
-                throw new ArgumentNullException(nameof(payment_History));
-            var res = new Payment_History()
-            {
-                Tarrif_TypeId = payment_History.Tarrif_TypeId,
-                AccountId = payment_History.AccountId,
-                CardTypeId = payment_History.CardTypeId,
-                IsPaid = true
-            };
-            _Repository.AddAsync(res);
-            return Task.FromResult(res);
+            throw new NotImplementedException();
+
         }
 
         public Task<bool> DeletePaymentAsync(Guid id)
@@ -57,17 +48,8 @@ namespace YandexMusic.Application.Services.lmpl
 
         public async Task<Payment_History> UpdatePaymentAsync(Guid id, PaymentHistoryDTO payment_History)
         {
-           if(payment_History == null)
-                throw new ArgumentException(nameof(payment_History));
-           var res = await _Repository.GetFirstAsync(u => u.Id ==id);
+            throw new NotImplementedException();
 
-            if (res == null)
-               throw new ArgumentException(nameof(res));
-            res.AccountId = payment_History.AccountId;
-            res.Tarrif_TypeId = payment_History.Tarrif_TypeId;
-            res.CardTypeId = payment_History.CardTypeId;
-
-            return res;
         }
     }
 }

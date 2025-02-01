@@ -5,7 +5,6 @@ using Yandex.Shared.Service;
 using YandexMusic.DataAccess.Identity;
 using YandexMusics.Core.Common;
 using YandexMusics.Core.Entities.Music;
-using YandexMusics.Core.Entities.Musics;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using System.Reflection;
@@ -34,6 +33,7 @@ public class DatabaseContext : IdentityDbContext<ApplicationUser>
     public DbSet<Payment_History> Payment_History { get; set; }
     public DbSet<Tarrif_Type> Tarrif_Types { get; set; }
     public DbSet<User> User { get; set; }
+    public DbSet<Logging> Logging {  get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

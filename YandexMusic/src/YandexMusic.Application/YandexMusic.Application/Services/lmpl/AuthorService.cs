@@ -8,7 +8,6 @@ using YandexMusic.DataAccess.DTOs;
 using YandexMusic.DataAccess.Repository;
 using YandexMusic.DataAccess.Repository.lmpl;
 using YandexMusics.Core.Entities.Music;
-using YandexMusics.Core.Entities.Musics;
 
 namespace YandexMusic.Application.Services.lmpl
 {
@@ -19,7 +18,7 @@ namespace YandexMusic.Application.Services.lmpl
         {
             _authorRepository = authorRepository;
         }
-        public Task<Author> AddAuthorAsync(AuthorDTO authorDTO)
+        public async  Task<Author> AddAuthorAsync(AuthorDTO authorDTO)
         {
             if(authorDTO == null)
                 throw new ArgumentNullException(nameof(authorDTO));
@@ -27,8 +26,8 @@ namespace YandexMusic.Application.Services.lmpl
             {
                 AuthorName = authorDTO.Authorname
             };
-            _authorRepository.AddAsync(author);
-            return Task.FromResult(author);
+           await  _authorRepository.AddAsync(author);
+            return author;
         }
 
         public async Task<bool> DeleteAuthorAsync(Guid id)
@@ -55,9 +54,6 @@ namespace YandexMusic.Application.Services.lmpl
             {
                 Authorname = author.AuthorName
             };
-
-
-          
         }
 
         public async Task<YandexMusics.Core.Entities.Music.Author> UpdateAuthorAsync(Guid id, AuthorDTO authorDTO)
