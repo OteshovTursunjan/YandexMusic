@@ -13,6 +13,7 @@ using Quartz;
 using Microsoft.Extensions.DependencyInjection;
 using YandexMusics.Core.Entities.Music;
 using YandexMusic.Application.Quartz;
+using YandexMusic.Application.Features.Author.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddQuartz(q =>

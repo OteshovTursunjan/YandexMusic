@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using YandexMusic.Application.Features.Cards.Commands;
+using YandexMusic.Application.Features.Cards.Queries;
 using YandexMusic.Application.Services;
 using YandexMusic.DataAccess.DTOs;
 
@@ -10,12 +13,10 @@ namespace YandexMusic.Controllers.user
    // [Authorize]
     public class CardsController : Controller
     {
-        public readonly ICardService _cardService;
-        public readonly IUserService _userService;
-        public CardsController(ICardService cardService, IUserService userService)
+        public readonly IMediator mediator;
+        public CardsController(IMediator mediator)
         {
-            _cardService = cardService;
-            _userService = userService;
+            this.mediator = mediator;
         }
         protected Guid GetUserIdFromToken()
         {
@@ -46,14 +47,14 @@ namespace YandexMusic.Controllers.user
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var res = await _cardService.CreateCard(cardDTO);
+            var res = await mediator.Send(new CreateCardsCommand(cardDTO));
             return Ok(res);
         }
         [HttpGet("GetCards")]
         public async Task<IActionResult> GetCards()
         {
             var UserId = GetUserIdFromToken();
-            var res = await _cardService.GetById(UserId);
+            var res = await mediator.Send(new GetCardsByIdQueries(UserId));
             return Ok(res);
         }
     }

@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
+using MediatR;
+using YandexMusic.Application.Features.Tarrif.Commands;
+using YandexMusic.Application.Features.Tarrif.Queries;
 
 namespace YandexMusic.Controllers.user
 {
     public class TarrifTypeController : Controller
     {
-        public readonly ITarrifTypeService tarrifTypeService;
-        public TarrifTypeController(ITarrifTypeService tarrifTypeService)
+       public readonly IMediator mediator;
+        public TarrifTypeController(IMediator mediator)
         {
-            this.tarrifTypeService = tarrifTypeService;
+            this.mediator = mediator;
         }
 
         public IActionResult Index()
@@ -23,17 +26,17 @@ namespace YandexMusic.Controllers.user
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var newTarrif = await tarrifTypeService.AddTarrifAsync(tarrifTypeDTO);
+            var newTarrif = await mediator.Send(new CreateTarrifCommand(tarrifTypeDTO));
             return  newTarrif == null ? NotFound() : Ok(newTarrif);
         }
-        [HttpPut("UpdateTarrif")]
+        [HttpPut("UpdateTarrif{id}")]
         public async Task<IActionResult> UpdateTarrif([FromRoute] Guid id, [FromBody] TarrifTypeDTO tarrif)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var res = await tarrifTypeService.UpdateTarrifAsync(id, tarrif);
+            var res = await mediator.Send(new UpdateTarrifCommand(id, tarrif)); 
             return Ok(res);
         }
         [HttpGet("GetTarrif{id}")]
@@ -41,7 +44,7 @@ namespace YandexMusic.Controllers.user
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var newTarrif = await tarrifTypeService.GetByIdAsync(id);
+            var newTarrif = await mediator.Send(new GetTarrifByIdQueries(id));
 
             return newTarrif == null ? NotFound() : Ok(newTarrif);
         }
@@ -50,7 +53,7 @@ namespace YandexMusic.Controllers.user
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var newTarruf = tarrifTypeService.DeleteTarrifAsync(id);
+            var newTarruf = await mediator.Send(new DeleteTarrifCommand(id)) ;
 
             return newTarruf == null ? NotFound() : Ok(newTarruf);
         }

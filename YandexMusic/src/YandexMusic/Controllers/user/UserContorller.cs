@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using YandexMusic.Application.Services.lmpl;
 using System.Diagnostics;
+using MediatR;
+using YandexMusic.Application.Features.User.Commands;
+using YandexMusic.Application.Features.User.Queries;
 
 namespace YandexMusic.Controllers.user
 {
@@ -18,12 +21,16 @@ namespace YandexMusic.Controllers.user
         private readonly IUserService _userService;
         private readonly IJwtTokenHandler _jwtTokenHandler;
         public readonly TokenService _tokenService;
-
-        public UserContorller(IUserService userService, IJwtTokenHandler jwtTokenHandler, TokenService tokenService)
+        private readonly IMediator mediator;
+        public UserContorller(IUserService userService, 
+            IJwtTokenHandler jwtTokenHandler, 
+            IMediator mediator,
+            TokenService tokenService)
         {
             _userService = userService;
             _jwtTokenHandler = jwtTokenHandler;
             _tokenService = tokenService;
+            this.mediator = mediator;
         }
         protected Guid GetUserIdFromToken()
         {
@@ -55,7 +62,7 @@ namespace YandexMusic.Controllers.user
         {
 
             var userId = GetUserIdFromToken();
-            var res = await _userService.GetByIdAsync(userId);
+            var res = await mediator.Send(new GetByIdUserQueries(userId));
             return res == null ? NotFound() : Ok(res);
         }
 
@@ -66,7 +73,7 @@ namespace YandexMusic.Controllers.user
                 return BadRequest(ModelState);
             try
             {
-                var CreateUser = await _userService.AddUserAsync(userForCreationDTO);
+                var CreateUser = await mediator.Send(new CreateUserCommand(userForCreationDTO));
                 var accesTokent = _jwtTokenHandler.GenerateAccesToken(CreateUser);
                 var refreshToken = _jwtTokenHandler.GenerateRefreshToken();
 
@@ -89,7 +96,7 @@ namespace YandexMusic.Controllers.user
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _userService.UpdateUserAsync(id, userDTO);
+            var res = await mediator.Send(new UpdateUserCommand(id, userDTO));
             return res == null ? NotFound() : Ok(res);
         }
         [HttpDelete("Delete/{ID}")]
@@ -98,7 +105,7 @@ namespace YandexMusic.Controllers.user
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _userService.DeleteUserAsync(ID);
+            var res = await mediator.Send(new DeleteUserCommand(ID));
             return res == null ? NotFound() : Ok(res);
         }
 

@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using YandexMusic.DataAccess.DTOs;
 using YandexMusic.Application.Services;
+using MediatR;
+using YandexMusic.Application.Features.Genre.Commands;
+using YandexMusic.Application.Features.Genre.Queries;
 
 namespace YandexMusic.Controllers.Music
 {
     public class GenresController : Controller
     {
-        public readonly IGenresService _genresService;
-        public GenresController(IGenresService genresService)
+        public readonly IMediator mediator;
+        public GenresController(IMediator mediator)
         {
-            _genresService = genresService;
+            this.mediator = mediator;
         }
 
         public IActionResult Index()
@@ -21,7 +24,8 @@ namespace YandexMusic.Controllers.Music
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var res = await _genresService.AddGenresAsync(genreDTO);
+          
+            var res = await mediator.Send(new CreateGenreCommand(genreDTO));
             return res == null ? NotFound() : Ok(res);
 
         }
@@ -30,7 +34,7 @@ namespace YandexMusic.Controllers.Music
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var res = await _genresService.GetByIdAsync(id);
+            var res = await mediator.Send(new GetGenreByIdQueries(id));
             return Ok(res);
 
         }
@@ -40,7 +44,7 @@ namespace YandexMusic.Controllers.Music
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _genresService.UpdateGenresAsync(id, genreDTO);
+            var res = await mediator.Send(new UpdateGenreCommand(id,genreDTO));
             return Ok(res);
         }
         [HttpDelete("DeleteGenres{id}")]
@@ -48,7 +52,7 @@ namespace YandexMusic.Controllers.Music
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var res = await  _genresService.DeleteGenresAsync(id);
+            var res = await mediator.Send(new DeleteGenreCommand(id));
             return Ok(res);
         }
 

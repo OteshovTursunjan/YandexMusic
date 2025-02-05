@@ -3,15 +3,18 @@ using YandexMusic.DataAccess.DTOs;
 //using YandexMusic.Application.DTOs.User;
 using YandexMusic.Application.Services;
 using YandexMusic.Application.Services.lmpl;
+using MediatR;
+using YandexMusic.Application.Features.Author.Commands;
+using YandexMusic.Application.Features.Author.Queries;
 
 namespace YandexMusic.Controllers.Music
 {
     public class AuthorController : Controller
     {
-        public readonly IAuthorService _authorService;
-        public AuthorController(IAuthorService authorService)
+        public readonly IMediator mediator;
+        public AuthorController(IMediator mediator)
         {
-            _authorService = authorService;
+           this.mediator = mediator;
         }
         public IActionResult Index()
         {
@@ -23,10 +26,10 @@ namespace YandexMusic.Controllers.Music
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            var result = await mediator.Send(new CreateAuthorCommand(authorDTO.Authorname)) ;
+            
 
-            var newAuthor = await _authorService.AddAuthorAsync(authorDTO);
-
-            return newAuthor == null ? NotFound() : Ok(newAuthor);
+            return result == null ? NotFound() : Ok(result);
         }
 
         [HttpPut("update-Author{id}")]
@@ -35,7 +38,7 @@ namespace YandexMusic.Controllers.Music
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _authorService.UpdateAuthorAsync(id, authorDTO);
+            var res = await mediator.Send(new UpdateAuthorCommand(id, authorDTO.Authorname)) ;
             return res == null ? NotFound() : Ok(res);
         }
         [HttpGet("GetAuthor{id}")]
@@ -44,7 +47,8 @@ namespace YandexMusic.Controllers.Music
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _authorService.GetByIdAsync(id);
+            var res = await mediator.Send(new GetAuthorByIdQueris(id)) ;
+
             return res == null ? NotFound() : Ok(res);
 
         }
@@ -54,7 +58,7 @@ namespace YandexMusic.Controllers.Music
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _authorService.DeleteAuthorAsync(id);
+            var res = await mediator.Send(new DeleteAuthorCommand(id));
             return res == null ? NotFound() : Ok(res);
 
         }
